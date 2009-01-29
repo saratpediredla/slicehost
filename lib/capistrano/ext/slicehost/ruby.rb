@@ -6,7 +6,8 @@ set :ruby_enterprise_url ,Net::HTTP.get( 'www.rubyenterpriseedition.com', '/down
 set :ruby_enterprise_version, "#{ruby_enterprise_url[/(ruby-enterprise.*)(.tar.gz)/, 1]}"
 
 namespace :ruby do
-
+  
+  
   desc "Install Ruby 1.8"
   task :setup_18, :roles => :app do
     sudo "aptitude install -y ruby1.8-dev ruby1.8 ri1.8 rdoc1.8 irb1.8 libreadline-ruby1.8 libruby1.8 libopenssl-ruby sqlite3 libsqlite3-ruby1.8"
@@ -20,6 +21,7 @@ namespace :ruby do
   desc "Install Ruby Enterpise Edition"
   task :install_enterprise, :roles => :app do
     sudo "aptitude install -y libssl-dev"
+    sudo "apt-get install libreadline5-dev"
     run "test ! -d /opt/#{ruby_enterprise_version}"
     run "wget -q #{ruby_enterprise_url}"
     run "tar xzvf #{ruby_enterprise_version}.tar.gz"
